@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Battle of Pioneers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+    <h1>⚓ Battle of Pioneers</h1>
+
+    <div id="user">
+      👤 <span id="username">Guest Player</span>
+    </div>
+
+    <div id="entry">
+      <h2>Entry Fee</h2>
+      <p>Entry Fee: <b>0.1 π</b></p>
+      <button onclick="payEntry()">Pay & Enter</button>
+    </div>
+
+    <div id="game" style="display:none">
+      <h2>Game Board</h2>
+      <div id="grid"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
