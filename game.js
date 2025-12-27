@@ -36,7 +36,6 @@ function loadGrid() {
     grid.appendChild(cell);
   }
 }
-window.onload = () => {
-  loginWithPi();
-};
+
+
 
