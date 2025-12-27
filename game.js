@@ -3,16 +3,19 @@ let currentUser = null;
 async function loginWithPi() {
   try {
     const auth = await Pi.authenticate(
-      ["username", "payments"],
-      onIncompletePaymentFound
+      ["username"],
+      function (payment) {
+        console.log("Incomplete payment found", payment);
+      }
     );
 
-    currentUser = auth.user;
-    document.getElementById("username").innerText = currentUser.username;
+    document.getElementById("username").innerText =
+      auth.user.username;
 
+    alert("Logged in as " + auth.user.username);
   } catch (err) {
-    alert("Pi login failed");
     console.error(err);
+    alert("Pi login failed. Please open via Pi Sandbox.");
   }
 }
 
@@ -36,6 +39,7 @@ function loadGrid() {
     grid.appendChild(cell);
   }
 }
+
 
 
 
