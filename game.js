@@ -1,3 +1,24 @@
+let currentUser = null;
+
+async function loginWithPi() {
+  try {
+    const auth = await Pi.authenticate(
+      ["username", "payments"],
+      onIncompletePaymentFound
+    );
+
+    currentUser = auth.user;
+    document.getElementById("username").innerText = currentUser.username;
+
+  } catch (err) {
+    alert("Pi login failed");
+    console.error(err);
+  }
+}
+
+function onIncompletePaymentFound(payment) {
+  console.log("Incomplete payment found", payment);
+}
 const grid = document.getElementById("grid");
 
 function payEntry() {
@@ -15,3 +36,7 @@ function loadGrid() {
     grid.appendChild(cell);
   }
 }
+window.onload = () => {
+  loginWithPi();
+};
+
