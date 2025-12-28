@@ -30,6 +30,18 @@
 
     <div id="game" style="display:none">
   <p id="shipCount">Ships remaining: 5</p>
+      <div id="shipPanel">
+  <h3>Select Ship</h3>
+
+  <button onclick="selectShip('Carrier', 4)">Carrier (4)</button>
+  <button onclick="selectShip('Battleship', 4)">Battleship (4)</button>
+  <button onclick="selectShip('Destroyer', 3)">Destroyer (3)</button>
+  <button onclick="selectShip('Submarine', 3)">Submarine (3)</button>
+  <button onclick="selectShip('Cruiser', 2)">Cruiser (2)</button>
+
+  <p id="selectedShip">Selected ship: None</p>
+</div>
+
       <button onclick="resetGame()">Start Again</button>
   <h2>Game Board</h2>
   <div id="grid"></div>
@@ -39,6 +51,7 @@
   <script src="game.js"></script>
 </body>
 </html>
+
 
 
 
