@@ -60,10 +60,6 @@ function payEntry() {
 function loadGrid() {
     grid.innerHTML = "";
 
-    // reset state
-    shipsRemaining = TOTAL_SHIPS;
-    placementLocked = false;
-
     document.getElementById("shipCount").innerText =
         "Ships remaining: " + shipsRemaining;
 
@@ -117,19 +113,20 @@ function resetGame() {
   // Reset core state
   placedShips = [];
   shipsRemaining = TOTAL_SHIPS;
+  currentShipIndex = 0;   // ✅ CRITICAL FIX
   placementMode = true;
   placementLocked = false;
 
   // Reset UI text
   document.getElementById("shipCount").innerText =
     "Ships remaining: " + shipsRemaining;
-
   document.getElementById("statusMsg").innerText =
     "Click on the grid to deploy ships";
 
-  // Rebuild grid from scratch
+  // Rebuild grid
   loadGrid();
 }
+
 
 
 
