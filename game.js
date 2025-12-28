@@ -6,6 +6,16 @@ let placedShips = [];
 let shipsRemaining = TOTAL_SHIPS;
 let placementMode = true;
 let placementLocked = false;
+let currentShip = null;
+let currentShipSize = 0;
+
+function selectShip(name, size) {
+  currentShip = name;
+  currentShipSize = size;
+
+  document.getElementById("selectedShip").innerText =
+    "Selected ship: " + name + " (" + size + ")";
+}
 
 async function loginWithPi() {
   try {
@@ -59,7 +69,12 @@ function loadGrid() {
 }
 
 function handlePlacement(index, cell) {
-  if (!placementMode) return;
+if (!placementMode) return;
+
+if (!currentShip) {
+  alert("Please select a ship first!");
+  return;
+}
 
   if (placedShips.includes(index)) {
     alert("Ship already placed here!");
@@ -72,8 +87,18 @@ function handlePlacement(index, cell) {
     return;
   }
 
-  placedShips.push(index);
-  shipsRemaining--;
+  placedShips.push({
+  index: index,
+  ship: currentShip,
+  size: currentShipSize
+});
+
+shipsRemaining--;
+currentShip = null;
+currentShipSize = 0;
+
+document.getElementById("selectedShip").innerText =
+  "Selected ship: None";
 
   cell.style.backgroundColor = "#ff7043";
 
@@ -95,6 +120,7 @@ function resetGame() {
 
   loadGrid();
 }
+
 
 
 
