@@ -112,15 +112,24 @@ function handlePlacement(index, cell) {
   }
 }
 function resetGame() {
+  // Reset core state
   placedShips = [];
   shipsRemaining = TOTAL_SHIPS;
   placementMode = true;
+  placementLocked = false;
 
+  // Reset UI text
   document.getElementById("shipCount").innerText =
     "Ships remaining: " + shipsRemaining;
 
+  document.getElementById("statusMsg").innerText =
+    "Click on the grid to deploy ships";
+
+  // Reload empty grid
   loadGrid();
 }
+
+
 
 
 
