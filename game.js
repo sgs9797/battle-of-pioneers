@@ -106,10 +106,12 @@ function handlePlacement(index, cell) {
     `🛳️ Your ${shipName} is reporting for duty!`;
 
   if (shipsRemaining === 0) {
-    placementMode = false;
-    document.getElementById("statusMsg").innerText =
-      "✅ All ships deployed! Ready for battle.";
-  }
+  placementMode = false;
+  placementLocked = true;
+
+  document.getElementById("statusMsg").innerText =
+    "✅ All ships deployed! Ready for battle.";
+}
 }
 function resetGame() {
   // Reset core state
@@ -125,9 +127,11 @@ function resetGame() {
   document.getElementById("statusMsg").innerText =
     "Click on the grid to deploy ships";
 
-  // Reload empty grid
+  // Rebuild grid from scratch
   loadGrid();
 }
+
+
 
 
 
