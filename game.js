@@ -5,6 +5,7 @@ const TOTAL_SHIPS = 5;
 let placedShips = [];
 let shipsRemaining = TOTAL_SHIPS;
 let placementMode = true;
+let placementLocked = false;
 
 async function loginWithPi() {
   try {
@@ -38,17 +39,23 @@ function payEntry() {
 }
 
 function loadGrid() {
-  grid.innerHTML = "";
+    grid.innerHTML = "";
 
-  for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    cell.dataset.index = i;
+    // reset state
+    shipsRemaining = TOTAL_SHIPS;
+    placementLocked = false;
 
-    cell.onclick = () => handlePlacement(i, cell);
+    document.getElementById("shipCount").innerText =
+        "Ships remaining: " + shipsRemaining;
 
-    grid.appendChild(cell);
-  }
+    for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+
+        cell.onclick = () => handlePlacement(i, cell);
+
+        grid.appendChild(cell);
+    }
 }
 
 function handlePlacement(index, cell) {
@@ -78,6 +85,7 @@ function handlePlacement(index, cell) {
     placementMode = false;
   }
 }
+
 
 
 
