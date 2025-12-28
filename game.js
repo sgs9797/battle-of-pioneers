@@ -85,6 +85,17 @@ function handlePlacement(index, cell) {
     placementMode = false;
   }
 }
+function resetGame() {
+  placedShips = [];
+  shipsRemaining = TOTAL_SHIPS;
+  placementMode = true;
+
+  document.getElementById("shipCount").innerText =
+    "Ships remaining: " + shipsRemaining;
+
+  loadGrid();
+}
+
 
 
 
