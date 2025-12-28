@@ -1,6 +1,15 @@
 let currentUser = null;
 const GRID_SIZE = 6;
 const TOTAL_SHIPS = 5;
+const shipQueue = [
+  "Carrier",
+  "Battleship",
+  "Destroyer",
+  "Submarine",
+  "Cruiser"
+];
+
+let currentShipIndex = 0;
 
 let placedShips = [];
 let shipsRemaining = TOTAL_SHIPS;
@@ -69,45 +78,37 @@ function loadGrid() {
 }
 
 function handlePlacement(index, cell) {
-if (!placementMode) return;
-
-if (!currentShip) {
-  alert("Please select a ship first!");
-  return;
-}
+  if (!placementMode) return;
 
   if (placedShips.includes(index)) {
-    alert("Ship already placed here!");
+    alert("A ship is already deployed here!");
     return;
   }
 
-  if (shipsRemaining === 0) {
-    alert("All ships placed!");
+  if (currentShipIndex >= shipQueue.length) {
+    alert("All ships deployed!");
     placementMode = false;
     return;
   }
 
-  placedShips.push({
-  index: index,
-  ship: currentShip,
-  size: currentShipSize
-});
+  const shipName = shipQueue[currentShipIndex];
 
-shipsRemaining--;
-currentShip = null;
-currentShipSize = 0;
-
-document.getElementById("selectedShip").innerText =
-  "Selected ship: None";
-
+  placedShips.push(index);
   cell.style.backgroundColor = "#ff7043";
+
+  shipsRemaining--;
+  currentShipIndex++;
 
   document.getElementById("shipCount").innerText =
     "Ships remaining: " + shipsRemaining;
 
+  document.getElementById("statusMsg").innerText =
+    `🛳️ Your ${shipName} is reporting for duty!`;
+
   if (shipsRemaining === 0) {
-    alert("All ships placed! Ready for battle.");
     placementMode = false;
+    document.getElementById("statusMsg").innerText =
+      "✅ All ships deployed! Ready for battle.";
   }
 }
 function resetGame() {
@@ -120,6 +121,7 @@ function resetGame() {
 
   loadGrid();
 }
+
 
 
 
