@@ -74,7 +74,7 @@ function loadGrid() {
 }
 
 function handlePlacement(index, cell) {
-  if (!placementMode) return;
+  if (!placementMode || placementLocked) return;
 
   if (placedShips.includes(index)) {
     alert("A ship is already deployed here!");
@@ -126,6 +126,7 @@ function resetGame() {
   // Rebuild grid
   loadGrid();
 }
+
 
 
 
