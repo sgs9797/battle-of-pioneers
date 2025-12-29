@@ -19,8 +19,6 @@ let placementMode = true;
 let placementLocked = false;
 let currentShip = null;
 let currentShipSize = 0;
-let playerShips = [];
-let playerHits = [];
 let enemyShipCount = TOTAL_SHIPS;
 let enemyShips = [];
 let enemyHits = [];
@@ -279,6 +277,7 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
