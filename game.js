@@ -58,6 +58,7 @@ function onIncompletePaymentFound(payment) {
 
 
 function payEntry() {
+  alert("Pay & Enter clicked");
   console.log("Pay & Enter clicked"); // 🔍 DEBUG
 
   const entryDiv = document.getElementById("entry");
@@ -249,34 +250,39 @@ cell.dataset.hasShip = "true";   // ✅ REQUIRED
 }
 }
 function resetGame() {
+
+  // 🔁 RESTORE ENTRY FLOW
+  document.getElementById("entry").style.display = "block";
+  document.getElementById("game").style.display = "none";
+
   // Reset core state
   placedShips = [];
   shipsRemaining = TOTAL_SHIPS;
-  currentShipIndex = 0;   // ✅ CRITICAL FIX
+  currentShipIndex = 0;
   placementMode = true;
   placementLocked = false;
-    // 🔁 FIX 5: Reset enemy & turn state
+
   enemyShips = [];
   enemyHits = [];
   enemyAttacks = [];
   playerTurn = true;
 
   playerHits = 0;
-enemyHitsCount = 0;
+  enemyHitsCount = 0;
 
-
-  // Reset UI text
   document.getElementById("shipCount").innerText =
     "Ships remaining: " + shipsRemaining;
+
   document.getElementById("statusMsg").innerText =
     "Click on the grid to deploy ships";
-  document.getElementById("enterWarzoneBtn").style.display = "none";
-document.getElementById("boardTitle").innerText = "Placement Board";
 
-  // Rebuild grid
+  document.getElementById("enterWarzoneBtn").style.display = "none";
+  document.getElementById("boardTitle").innerText = "Placement Board";
+
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
