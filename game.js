@@ -102,7 +102,7 @@ function placeEnemyShips() {
   console.log("Enemy ships (hidden):", enemyShips);
 }
 function attackEnemy(index, cell) {
-  if (!playerTurn) return;   // STEP 5: prevent double clicks
+  if (!playerTurn) return;              // ⛔ Block double clicks
   if (enemyHits.includes(index)) return;
 
   enemyHits.push(index);
@@ -116,9 +116,9 @@ function attackEnemy(index, cell) {
     document.getElementById("statusMsg").innerText =
       "🌊 Miss! Empty waters.";
   }
-  playerTurn = false;        // STEP 4: end player turn
-setTimeout(enemyTurn, 800);
 
+  playerTurn = false;                   // ✅ END player turn
+  setTimeout(enemyTurn, 800);            // ✅ Enemy responds
 }
 function enterWarzone() {
   placementMode = false;
@@ -132,6 +132,8 @@ function enterWarzone() {
   placeEnemyShips();
 }
 function enemyTurn() {
+  if (playerTurn) return;   // ⛔ Prevent accidental double turns
+
   let target;
   do {
     target = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
@@ -152,7 +154,7 @@ function enemyTurn() {
       "🌊 Enemy missed!";
   }
 
-  playerTurn = true;
+  playerTurn = true;        // ✅ RETURN turn to player
 }
 
 function handlePlacement(index, cell) {
@@ -172,8 +174,9 @@ function handlePlacement(index, cell) {
   const shipName = shipQueue[currentShipIndex];
 
   placedShips.push(index);
-  cell.style.backgroundColor = "#ff7043";
-
+cell.style.backgroundColor = "#ff7043";
+cell.dataset.hasShip = "true";   // ✅ REQUIRED
+  
   shipsRemaining--;
   currentShipIndex++;
 
@@ -199,6 +202,11 @@ function resetGame() {
   currentShipIndex = 0;   // ✅ CRITICAL FIX
   placementMode = true;
   placementLocked = false;
+    // 🔁 FIX 5: Reset enemy & turn state
+  enemyShips = [];
+  enemyHits = [];
+  enemyAttacks = [];
+  playerTurn = true;
 
   // Reset UI text
   document.getElementById("shipCount").innerText =
@@ -211,6 +219,7 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   // Rebuild grid
   loadGrid();
 }
+
 
 
 
