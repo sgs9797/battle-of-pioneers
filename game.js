@@ -58,7 +58,6 @@ function onIncompletePaymentFound(payment) {
 
 
 function payEntry() {
-  alert("Pay & Enter clicked");
   console.log("Pay & Enter clicked"); // 🔍 DEBUG
 
   const entryDiv = document.getElementById("entry");
@@ -282,6 +281,7 @@ function resetGame() {
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
