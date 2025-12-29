@@ -60,27 +60,45 @@ function onIncompletePaymentFound(payment) {
 
 
 function payEntry() {
-  // Placeholder for Pi payment
-  document.getElementById("entry").style.display = "none";
-  document.getElementById("game").style.display = "block";
-  loadGrid();
+  console.log("Pay & Enter clicked"); // 🔍 DEBUG
+
+  const entryDiv = document.getElementById("entry");
+  const gameDiv = document.getElementById("game");
+
+  if (!entryDiv || !gameDiv) {
+    alert("ENTRY or GAME div not found!");
+    return;
+  }
+
+  entryDiv.style.display = "none";
+  gameDiv.style.display = "block";
+
+  // 🔥 IMPORTANT: delay grid build until DOM is visible
+  setTimeout(() => {
+    loadGrid();
+  }, 0);
 }
 
 function loadGrid() {
   const grid = document.getElementById("grid");
-    grid.innerHTML = "";
+  if (!grid) {
+    console.error("Grid not found!");
+    return;
+  }
 
-    document.getElementById("shipCount").innerText =
-        "Ships remaining: " + shipsRemaining;
+  grid.innerHTML = "";
 
-    for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-        const cell = document.createElement("div");
-        cell.className = "cell";
+  document.getElementById("shipCount").innerText =
+    "Ships remaining: " + shipsRemaining;
 
-        cell.onclick = () => handlePlacement(i, cell);
-      cell.dataset.hasShip = placedShips.includes(i) ? "true" : "false";
-        grid.appendChild(cell);
-    }
+  for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.dataset.hasShip = placedShips.includes(i) ? "true" : "false";
+
+    cell.onclick = () => handlePlacement(i, cell);
+    grid.appendChild(cell);
+  }
 }
 function loadEnemyGrid() {
   const enemyGrid = document.getElementById("enemyGrid");
@@ -261,6 +279,7 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
