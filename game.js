@@ -57,7 +57,7 @@ async function loginWithPi() {
 function onIncompletePaymentFound(payment) {
   console.log("Incomplete payment found", payment);
 }
-const grid = document.getElementById("grid");
+
 
 function payEntry() {
   // Placeholder for Pi payment
@@ -67,6 +67,7 @@ function payEntry() {
 }
 
 function loadGrid() {
+  const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
     document.getElementById("shipCount").innerText =
@@ -105,7 +106,7 @@ function placeEnemyShips() {
   console.log("Enemy ships (hidden):", enemyShips);
 }
 function attackEnemy(index, cell) {
-  if (!playerTurn) return;
+  if (!playerTurn || placementMode) return;
   if (enemyHits.includes(index)) return;
 
   enemyHits.push(index);
@@ -113,7 +114,6 @@ function attackEnemy(index, cell) {
   if (enemyShips.includes(index)) {
     cell.classList.add("hit");
     enemyHitsCount++;
-
     document.getElementById("statusMsg").innerText =
       "💥 Hit! Enemy ship damaged.";
   } else {
@@ -122,7 +122,7 @@ function attackEnemy(index, cell) {
       "🌊 Miss! Empty waters.";
   }
 
-  // ✅ WIN CHECK (MUST BE OUTSIDE else)
+  // ✅ WIN CHECK — EXACT PLACE
   if (enemyHitsCount === TOTAL_SHIPS) {
     document.getElementById("statusMsg").innerText =
       "🏆 Victory! Enemy fleet destroyed!";
@@ -160,7 +160,6 @@ function enemyTurn() {
   if (cell.dataset.hasShip === "true") {
     cell.style.backgroundColor = "red";
     playerHits++;
-
     document.getElementById("statusMsg").innerText =
       "💥 Enemy HIT your ship!";
   } else {
@@ -169,7 +168,7 @@ function enemyTurn() {
       "🌊 Enemy missed!";
   }
 
-  // ✅ LOSE CHECK (always check)
+  // ✅ LOSE CHECK — EXACT PLACE
   if (playerHits === TOTAL_SHIPS) {
     document.getElementById("statusMsg").innerText =
       "💀 Defeat! Your fleet has been destroyed.";
@@ -181,16 +180,20 @@ function enemyTurn() {
 }
 function endGame() {
   placementLocked = true;
+  placementMode = false;
   playerTurn = false;
 
-  // Disable enemy grid clicks
-  const enemyCells = document.querySelectorAll("#enemyGrid .cell");
-  enemyCells.forEach(cell => {
+  // Disable enemy grid
+  document.querySelectorAll("#enemyGrid .cell").forEach(cell => {
     cell.onclick = null;
     cell.style.cursor = "not-allowed";
   });
-}
 
+  // Disable player grid
+  document.querySelectorAll("#grid .cell").forEach(cell => {
+    cell.onclick = null;
+  });
+}
 function handlePlacement(index, cell) {
   if (!placementMode || placementLocked) return;
 
@@ -256,7 +259,9 @@ document.getElementById("boardTitle").innerText = "Placement Board";
 
   // Rebuild grid
   loadGrid();
+  document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
