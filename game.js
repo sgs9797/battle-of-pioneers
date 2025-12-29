@@ -17,6 +17,8 @@ let placementMode = true;
 let placementLocked = false;
 let currentShip = null;
 let currentShipSize = 0;
+let enemyShips = [];
+let enemyHits = [];
 
 function selectShip(name, size) {
   currentShip = name;
@@ -72,7 +74,44 @@ function loadGrid() {
         grid.appendChild(cell);
     }
 }
+function loadEnemyGrid() {
+  const enemyGrid = document.getElementById("enemyGrid");
+  enemyGrid.innerHTML = "";
 
+  for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.onclick = () => attackEnemy(i, cell);
+    enemyGrid.appendChild(cell);
+  }
+}
+function placeEnemyShips() {
+  enemyShips = [];
+
+  while (enemyShips.length < TOTAL_SHIPS) {
+    const pos = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
+    if (!enemyShips.includes(pos)) {
+      enemyShips.push(pos);
+    }
+  }
+
+  console.log("Enemy ships (hidden):", enemyShips);
+}
+function attackEnemy(index, cell) {
+  if (enemyHits.includes(index)) return;
+
+  enemyHits.push(index);
+
+  if (enemyShips.includes(index)) {
+    cell.classList.add("hit");
+    document.getElementById("statusMsg").innerText =
+      "💥 Hit! Enemy ship damaged.";
+  } else {
+    cell.classList.add("miss");
+    document.getElementById("statusMsg").innerText =
+      "🌊 Miss! Empty waters.";
+  }
+}
 function handlePlacement(index, cell) {
   if (!placementMode || placementLocked) return;
 
@@ -132,8 +171,13 @@ document.getElementById("boardTitle").innerText = "Placement Board";
 function enterWarzone() {
   document.getElementById("boardTitle").innerText = "Battle Board";
   document.getElementById("statusMsg").innerText =
-    "⚔️ Battle started! Click enemy grid to attack.";
+    "⚔️ Battle started! Attack enemy waters.";
+
+  loadEnemyGrid();
+  placeEnemyShips();
 }
+
+
 
 
 
