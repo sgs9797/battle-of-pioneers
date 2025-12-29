@@ -17,6 +17,8 @@ let placementMode = true;
 let placementLocked = false;
 let currentShip = null;
 let currentShipSize = 0;
+let playerShips = [];
+let playerHits = [];
 let enemyShips = [];
 let enemyHits = [];
 let enemyAttacks = [];
@@ -118,6 +120,41 @@ function attackEnemy(index, cell) {
 setTimeout(enemyTurn, 800);
 
 }
+function enterWarzone() {
+  placementMode = false;
+  placementLocked = true;
+  playerTurn = true;
+
+  document.getElementById("statusMsg").innerText =
+    "⚔️ Battle started! Attack enemy waters.";
+
+  loadEnemyGrid();
+  placeEnemyShips();
+}
+function enemyTurn() {
+  let target;
+  do {
+    target = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
+  } while (enemyAttacks.includes(target));
+
+  enemyAttacks.push(target);
+
+  const cells = document.querySelectorAll("#grid .cell");
+  const cell = cells[target];
+
+  if (cell.dataset.hasShip === "true") {
+    cell.style.backgroundColor = "red";
+    document.getElementById("statusMsg").innerText =
+      "💥 Enemy HIT your ship!";
+  } else {
+    cell.style.backgroundColor = "#aaa";
+    document.getElementById("statusMsg").innerText =
+      "🌊 Enemy missed!";
+  }
+
+  playerTurn = true;
+}
+
 function handlePlacement(index, cell) {
   if (!placementMode || placementLocked) return;
 
@@ -174,39 +211,9 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   // Rebuild grid
   loadGrid();
 }
-function enterWarzone() {
-  document.getElementById("boardTitle").innerText = "Battle Board";
-  document.getElementById("statusMsg").innerText =
-    "⚔️ Battle started! Attack enemy waters.";
 
-  loadEnemyGrid();
-  placeEnemyShips();
-}
-function enemyTurn() {
-  if (playerTurn) return;
 
-  let target;
-  do {
-    target = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
-  } while (enemyAttacks.includes(target));
 
-  enemyAttacks.push(target);
-
-  const cells = document.querySelectorAll("#grid .cell");
-  const cell = cells[target];
-
-  if (cell.dataset.hasShip === "true") {
-    cell.style.backgroundColor = "red";
-    document.getElementById("statusMsg").innerText =
-      "💥 Enemy HIT your ship!";
-  } else {
-    cell.style.backgroundColor = "#aaa";
-    document.getElementById("statusMsg").innerText =
-      "🌊 Enemy missed!";
-  }
-
-  playerTurn = true;
-}
 
 
 
