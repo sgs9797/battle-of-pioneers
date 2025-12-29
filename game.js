@@ -103,10 +103,11 @@ function handlePlacement(index, cell) {
 
   if (shipsRemaining === 0) {
   placementMode = false;
-  placementLocked = true;
 
   document.getElementById("statusMsg").innerText =
-    "✅ All ships deployed! Ready for battle.";
+    "✅ All ships deployed! Enter the warzone.";
+
+  document.getElementById("enterWarzoneBtn").style.display = "inline-block";
 }
 }
 function resetGame() {
@@ -122,10 +123,18 @@ function resetGame() {
     "Ships remaining: " + shipsRemaining;
   document.getElementById("statusMsg").innerText =
     "Click on the grid to deploy ships";
+  document.getElementById("enterWarzoneBtn").style.display = "none";
+document.getElementById("boardTitle").innerText = "Placement Board";
 
   // Rebuild grid
   loadGrid();
 }
+function enterWarzone() {
+  document.getElementById("boardTitle").innerText = "Battle Board";
+  document.getElementById("statusMsg").innerText =
+    "⚔️ Battle started! Click enemy grid to attack.";
+}
+
 
 
 
