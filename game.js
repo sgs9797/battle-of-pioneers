@@ -10,6 +10,8 @@ const shipQueue = [
 ];
 
 let currentShipIndex = 0;
+let playerHits = 0;
+let enemyHitsCount = 0;
 
 let placedShips = [];
 let shipsRemaining = TOTAL_SHIPS;
@@ -19,6 +21,7 @@ let currentShip = null;
 let currentShipSize = 0;
 let playerShips = [];
 let playerHits = [];
+let enemyShipCount = TOTAL_SHIPS;
 let enemyShips = [];
 let enemyHits = [];
 let enemyAttacks = [];
@@ -109,12 +112,22 @@ function attackEnemy(index, cell) {
 
   if (enemyShips.includes(index)) {
     cell.classList.add("hit");
+    enemyHitsCount++;
+    
     document.getElementById("statusMsg").innerText =
       "💥 Hit! Enemy ship damaged.";
   } else {
     cell.classList.add("miss");
     document.getElementById("statusMsg").innerText =
       "🌊 Miss! Empty waters.";
+    // ✅ PLAYER WIN CHECK
+  if (enemyHitsCount === TOTAL_SHIPS) {
+    document.getElementById("statusMsg").innerText =
+      "🏆 Victory! Enemy fleet destroyed!";
+    placementLocked = true;
+    playerTurn = false;
+    return;
+  }
   }
 
   playerTurn = false;                   // ✅ END player turn
@@ -146,15 +159,36 @@ function enemyTurn() {
 
   if (cell.dataset.hasShip === "true") {
     cell.style.backgroundColor = "red";
+    playerHits++;
+    
     document.getElementById("statusMsg").innerText =
       "💥 Enemy HIT your ship!";
   } else {
     cell.style.backgroundColor = "#aaa";
     document.getElementById("statusMsg").innerText =
       "🌊 Enemy missed!";
+    // ❌ PLAYER LOSE CHECK
+  if (playerHits === TOTAL_SHIPS) {
+    document.getElementById("statusMsg").innerText =
+      "💀 Defeat! Your fleet has been destroyed.";
+    placementLocked = true;
+    playerTurn = false;
+    return;
+  }
   }
 
   playerTurn = true;        // ✅ RETURN turn to player
+}
+function endGame() {
+  placementLocked = true;
+  playerTurn = false;
+
+  // Disable enemy grid clicks
+  const enemyCells = document.querySelectorAll("#enemyGrid .cell");
+  enemyCells.forEach(cell => {
+    cell.onclick = null;
+    cell.style.cursor = "not-allowed";
+  });
 }
 
 function handlePlacement(index, cell) {
@@ -208,6 +242,10 @@ function resetGame() {
   enemyAttacks = [];
   playerTurn = true;
 
+  playerHits = 0;
+enemyHitsCount = 0;
+
+
   // Reset UI text
   document.getElementById("shipCount").innerText =
     "Ships remaining: " + shipsRemaining;
@@ -219,6 +257,7 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   // Rebuild grid
   loadGrid();
 }
+
 
 
 
