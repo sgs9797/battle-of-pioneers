@@ -42,6 +42,29 @@ h1 {
   aspect-ratio: 1;
   border-radius: 4px;
 }
+/* PLAYER GRID */
+#grid .cell {
+  background-color: #4db6ac; /* light sea */
+}
+
+/* ENEMY GRID */
+#enemyGrid .cell {
+  background-color: #2c3e50; /* dark sea */
+  cursor: crosshair;
+}
+
+/* HIT (both grids) */
+.cell.hit {
+  background-color: red !important;
+}
+
+/* MISS (both grids) */
+.cell.miss {
+  background-color: #b0bec5 !important;
+}
+#enemyGrid .cell:hover {
+  filter: brightness(1.2);
+}
 .boards {
   display: flex;
   justify-content: center;
@@ -49,18 +72,8 @@ h1 {
   gap: 40px;
   margin-top: 20px;
 }
-.enemy .cell {
-  background-color: #2c3e50;
-  transition: background 0.2s ease;
-}
 
-.enemy .hit {
-  background-color: red;
-}
 
-.enemy .miss {
-  background-color: gray;
-}
 
 
 
