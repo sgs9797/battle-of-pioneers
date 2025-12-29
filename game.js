@@ -105,7 +105,7 @@ function placeEnemyShips() {
   console.log("Enemy ships (hidden):", enemyShips);
 }
 function attackEnemy(index, cell) {
-  if (!playerTurn) return;              // ⛔ Block double clicks
+  if (!playerTurn) return;
   if (enemyHits.includes(index)) return;
 
   enemyHits.push(index);
@@ -113,25 +113,25 @@ function attackEnemy(index, cell) {
   if (enemyShips.includes(index)) {
     cell.classList.add("hit");
     enemyHitsCount++;
-    
+
     document.getElementById("statusMsg").innerText =
       "💥 Hit! Enemy ship damaged.";
   } else {
     cell.classList.add("miss");
     document.getElementById("statusMsg").innerText =
       "🌊 Miss! Empty waters.";
-    // ✅ PLAYER WIN CHECK
+  }
+
+  // ✅ WIN CHECK (MUST BE OUTSIDE else)
   if (enemyHitsCount === TOTAL_SHIPS) {
     document.getElementById("statusMsg").innerText =
       "🏆 Victory! Enemy fleet destroyed!";
-    placementLocked = true;
-    playerTurn = false;
+    endGame();
     return;
   }
-  }
 
-  playerTurn = false;                   // ✅ END player turn
-  setTimeout(enemyTurn, 800);            // ✅ Enemy responds
+  playerTurn = false;
+  setTimeout(enemyTurn, 800);
 }
 function enterWarzone() {
   placementMode = false;
@@ -145,7 +145,7 @@ function enterWarzone() {
   placeEnemyShips();
 }
 function enemyTurn() {
-  if (playerTurn) return;   // ⛔ Prevent accidental double turns
+  if (playerTurn) return;
 
   let target;
   do {
@@ -160,24 +160,24 @@ function enemyTurn() {
   if (cell.dataset.hasShip === "true") {
     cell.style.backgroundColor = "red";
     playerHits++;
-    
+
     document.getElementById("statusMsg").innerText =
       "💥 Enemy HIT your ship!";
   } else {
     cell.style.backgroundColor = "#aaa";
     document.getElementById("statusMsg").innerText =
       "🌊 Enemy missed!";
-    // ❌ PLAYER LOSE CHECK
+  }
+
+  // ✅ LOSE CHECK (always check)
   if (playerHits === TOTAL_SHIPS) {
     document.getElementById("statusMsg").innerText =
       "💀 Defeat! Your fleet has been destroyed.";
-    placementLocked = true;
-    playerTurn = false;
+    endGame();
     return;
   }
-  }
 
-  playerTurn = true;        // ✅ RETURN turn to player
+  playerTurn = true;
 }
 function endGame() {
   placementLocked = true;
@@ -257,6 +257,7 @@ document.getElementById("boardTitle").innerText = "Placement Board";
   // Rebuild grid
   loadGrid();
 }
+
 
 
 
