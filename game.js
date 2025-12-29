@@ -19,6 +19,8 @@ let currentShip = null;
 let currentShipSize = 0;
 let enemyShips = [];
 let enemyHits = [];
+let enemyAttacks = [];
+let playerTurn = true;
 
 function selectShip(name, size) {
   currentShip = name;
@@ -70,7 +72,7 @@ function loadGrid() {
         cell.className = "cell";
 
         cell.onclick = () => handlePlacement(i, cell);
-
+      cell.dataset.hasShip = placedShips.includes(i) ? "true" : "false";
         grid.appendChild(cell);
     }
 }
@@ -98,6 +100,7 @@ function placeEnemyShips() {
   console.log("Enemy ships (hidden):", enemyShips);
 }
 function attackEnemy(index, cell) {
+  if (!playerTurn) return;   // STEP 5: prevent double clicks
   if (enemyHits.includes(index)) return;
 
   enemyHits.push(index);
@@ -111,6 +114,9 @@ function attackEnemy(index, cell) {
     document.getElementById("statusMsg").innerText =
       "🌊 Miss! Empty waters.";
   }
+  playerTurn = false;        // STEP 4: end player turn
+setTimeout(enemyTurn, 800);
+
 }
 function handlePlacement(index, cell) {
   if (!placementMode || placementLocked) return;
@@ -175,6 +181,31 @@ function enterWarzone() {
 
   loadEnemyGrid();
   placeEnemyShips();
+}
+function enemyTurn() {
+  if (playerTurn) return;
+
+  let target;
+  do {
+    target = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
+  } while (enemyAttacks.includes(target));
+
+  enemyAttacks.push(target);
+
+  const cells = document.querySelectorAll("#grid .cell");
+  const cell = cells[target];
+
+  if (cell.dataset.hasShip === "true") {
+    cell.style.backgroundColor = "red";
+    document.getElementById("statusMsg").innerText =
+      "💥 Enemy HIT your ship!";
+  } else {
+    cell.style.backgroundColor = "#aaa";
+    document.getElementById("statusMsg").innerText =
+      "🌊 Enemy missed!";
+  }
+
+  playerTurn = true;
 }
 
 
