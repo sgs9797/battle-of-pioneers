@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Battle of Pioneers - Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div id="app">
+  <h1>⚓ Battle of Pioneers</h1>
+
+  <p id="shipCount">Ships remaining: 5</p>
+  <p id="statusMsg">Click on the grid to deploy ships</p>
+
+  <button onclick="resetGame()">Start Again</button>
+
+  <button id="enterWarzoneBtn" onclick="enterWarzone()" style="display:none;">
+    Enter Warzone
+  </button>
+
+  <h2 id="boardTitle">Deployment Board</h2>
+
+  <div class="boards">
+    <div>
+      <h3>Your Fleet</h3>
+      <div id="grid"></div>
+    </div>
+
+    <div>
+      <h3>Enemy Waters</h3>
+      <div id="enemyGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

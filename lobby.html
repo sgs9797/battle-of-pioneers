@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Battle Lobby</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+  <h1>⚓ Battle Lobby</h1>
+
+  <p id="welcomeText">Welcome Commander</p>
+
+  <h3>Players in Lobby</h3>
+
+  <ul id="playerList">
+    <li>🤖 Computer Bot (Practice)</li>
+    <li class="offline">⏳ Waiting for players...</li>
+  </ul>
+
+  <div class="lobby-actions">
+    <button onclick="startPractice()">🤖 Practice vs Computer</button>
+
+    <button disabled>
+      ⚔️ Multiplayer (Coming Soon)
+    </button>
+  </div>
+</div>
+
+<script>
+  // show username if exists
+  const name = localStorage.getItem("username");
+  if (name) {
+    document.getElementById("welcomeText").innerText =
+      "Welcome, " + name;
+  }
+
+  function startPractice() {
+    localStorage.setItem("gameMode", "practice");
+    window.location.href = "game.html";
+  }
+</script>
+
+</body>
+</html>
