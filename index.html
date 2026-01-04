@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>
-  Pi.init({
-    version: "2.0",
-    sandbox: true
-  });
-</script>
+  <script>
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+  </script>
 </head>
-<body>
 
+<body>
   <div id="app">
     <h1>⚓ Battle of Pioneers</h1>
 
@@ -22,44 +22,19 @@
       👤 <span id="username">Loading...</span>
     </div>
 
-   <button id="loginBtn" onclick="loginWithPi()">
-  Login with Pi
-</button>
+    <button id="loginBtn" onclick="loginWithPi()">Login with Pi</button>
+
     <div id="entry">
       <h2>Entry Fee</h2>
       <p>Entry Fee: <b>0.1 π</b></p>
       <button onclick="payEntry()">Pay & Enter</button>
     </div>
-
-<div id="game" style="display:none">
-
-  <p id="shipCount">Ships remaining: 5</p>
-  <p id="statusMsg">Click on the grid to deploy ships</p>
-
-  <button onclick="resetGame()">Start Again</button>
-
-<button id="enterWarzoneBtn" onclick="enterWarzone()" style="display:none;">
-  Enter Warzone
-</button>
-
-<h2 id="boardTitle">Deployment Board</h2>
-
-<div class="boards">
-  <div>
-    <h3>Your Fleet</h3>
-    <div id="grid"></div>
   </div>
 
-  <div>
-    <h3>Enemy Waters</h3>
-    <div id="enemyGrid"></div>
-  </div>
-</div>
-</div>
-</div>
   <script src="game.js"></script>
 </body>
 </html>
+
 
 
 
