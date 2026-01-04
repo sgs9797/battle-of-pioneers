@@ -72,6 +72,39 @@ h1 {
   gap: 40px;
   margin-top: 20px;
 }
+#playerList {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#playerList li {
+  background: #eee;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+#playerList .offline {
+  opacity: 0.6;
+}
+
+.lobby-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.lobby-actions button {
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+
 
 
 
