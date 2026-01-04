@@ -1,3 +1,5 @@
+const gameMode = localStorage.getItem("gameMode") || "practice";
+
 let currentUser = null;
 const GRID_SIZE = 6;
 const TOTAL_SHIPS = 5;
@@ -58,23 +60,13 @@ function onIncompletePaymentFound(payment) {
 
 
 function payEntry() {
-  console.log("Pay & Enter clicked"); // 🔍 DEBUG
+  console.log("Pay & Enter clicked");
 
-  const entryDiv = document.getElementById("entry");
-  const gameDiv = document.getElementById("game");
+  // TEMP username storage (Pi will replace this later)
+  localStorage.setItem("username", "Player");
 
-  if (!entryDiv || !gameDiv) {
-    alert("ENTRY or GAME div not found!");
-    return;
-  }
-
-  entryDiv.style.display = "none";
-  gameDiv.style.display = "block";
-
-  // 🔥 IMPORTANT: delay grid build until DOM is visible
-  setTimeout(() => {
-    loadGrid();
-  }, 0);
+  // Go to lobby page
+  window.location.href = "lobby.html";
 }
 
 function loadGrid() {
@@ -281,6 +273,7 @@ function resetGame() {
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
