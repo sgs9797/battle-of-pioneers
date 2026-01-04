@@ -58,14 +58,13 @@ function onIncompletePaymentFound(payment) {
   console.log("Incomplete payment found", payment);
 }
 
-
 function payEntry() {
   console.log("Pay & Enter clicked");
 
-  // TEMP username storage (Pi will replace this later)
-  localStorage.setItem("username", "Player");
+  // Store mode if needed
+  localStorage.setItem("gameMode", "practice");
 
-  // Go to lobby page
+  // Navigate to lobby
   window.location.href = "lobby.html";
 }
 
@@ -273,6 +272,7 @@ function resetGame() {
   loadGrid();
   document.getElementById("enemyGrid").innerHTML = "";
 }
+
 
 
 
